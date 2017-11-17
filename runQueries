@@ -1,0 +1,16 @@
+#!/bin/bash
+
+cmd=""
+for var in "$@"
+do
+        if ! [ -r "$var" ]
+        then
+                echo "File $var does not exist or is not readable"
+        else
+                cmd="hive -f $var"
+                printf "\n\nRUNNING QUERY '$var'\n\n\n"
+                eval $cmd
+        fi
+done
+
+eval $cmd

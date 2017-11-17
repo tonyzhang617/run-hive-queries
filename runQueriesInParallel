@@ -1,0 +1,17 @@
+#!/bin/bash
+
+cmd=""
+for var in "$@"
+do
+        if ! [ -r "$var" ]
+        then
+                echo "File $var does not exist or is not readable"
+        elif [ -z "$cmd" ]
+        then
+                cmd="nohup hive -f $var --database tpcds_adls_300"
+        else
+                cmd="$cmd & nohup hive -f $var --database tpcds_adls_300"
+        fi
+done
+
+eval $cmd
